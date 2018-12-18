@@ -1,11 +1,17 @@
 var express = require('express');
 var app = express();
-var user = [
-    { id: 1, name: 'alice'}
+var morgan = require('morgan');
+
+var users = [
+    { id: 1, name: 'alice'},
+    { id: 1, name: 'bek'},
+    { id: 1, name: 'chris'}
 ]
 
+app.use(morgan('dev'));
+
 app.get('/users', function (req, res) {
-    res.send('user list');
+    res.json(users);
 })
 
 app.listen(3000, function () {
