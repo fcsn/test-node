@@ -10,7 +10,8 @@
     "supertest": "^3.3.0"
   },
   "scripts": {
-    "start": "node src"
+    "start": "node src",
+    "test": "mocha src/index.spec.js"
   },
   "devDependencies": {
     "mocha": "^5.2.0"
