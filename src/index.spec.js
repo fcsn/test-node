@@ -46,7 +46,7 @@ describe('GET /users/1은', () => {
             request(app)
                 .get('/users/1')
                 .end((err, res) => {
-                    res.body.should.have.property('id', 1)
+                    res.body.should.have.property('id', 1);
                     done();
                 });
         });
