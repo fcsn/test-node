@@ -40,7 +40,8 @@ describe('GET /users는', () => {
         });
     });
 });
-describe('GET /users/1은', () => {
+
+describe('GET /users/:id은', () => {
     describe('성공시', () => {
         it('id가 1인 유저 객체를 반환한다', (done) => {
             request(app)
@@ -52,7 +53,8 @@ describe('GET /users/1은', () => {
         });
     });
 });
-describe('DELETE /user/1',  () => {
+
+describe('DELETE /user/:id',  () => {
     describe('성공시', () => {
         it('204를 응답한다', done => {
             request(app)
@@ -70,6 +72,7 @@ describe('DELETE /user/1',  () => {
         });
     });
 });
+
 describe('POST /users', () => {
     describe('성공시', () => {
         let name = 'daniel',
@@ -90,6 +93,37 @@ describe('POST /users', () => {
         });
         it('입력한 name을 반환한다', () => {
             body.should.have.property('name', name);
+        })
+    })
+    describe('실패시', () => {
+        it('name 파라미터 누락시 400을 반환한다', done => {
+            request(app)
+                .post('/users')
+                .send({})
+                .expect(400)
+                .end(done)
+        });
+        it('name이 중복일 경우 409를 반환한다', done => {
+            request(app)
+                .post('/users')
+                .send({name: 'daniel'})
+                .expect(409)
+                .end(done)
+        })
+    })
+});
+
+describe('PUT /user/:id', () => {
+    describe('성공시', () => {
+        it('변경된 name을 응답한다', done => {
+            const name = 'charlie';
+            request(app)
+                .put('users/1')
+                .send({name})
+                .end((err, res) => {
+                    res.body.should.have.property('name', name);
+                    done();
+                });
         })
     })
 })
